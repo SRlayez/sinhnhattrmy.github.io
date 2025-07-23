@@ -202,11 +202,11 @@
     <div class="button-container">
       <button onclick="resetGame()">Xem lại từ đầu 💕</button>
     </div>
-    <audio id="cheerSound" src="https://screenapp.io/app/#/shared/RnV0FwShAw"></audio>
+    <audio id="cheerSound" src="https://cdn.pixabay.com/audio/2023/03/29/audio_6b3f6f35f3.mp3"></audio>
   </div>
   <audio id="bgMusic" loop>
-    <source src="https://screenapp.io/app/#/shared/RnV0FwShAw" type="audio/mp3">
-    <!-- Bài "Sweet" từ Pixabay, nhẹ nhàng, lãng mạn -->
+    <source src="/birthday-334876.mp3" type="audio/mp3">
+    <!-- Đường dẫn tương đối từ root directory -->
   </audio>
   <button onclick="toggleMusic()" style="position: fixed; top: 20px; right: 20px;">Bật Nhạc 🎶</button>
 
@@ -222,23 +222,23 @@
       "Cuộc sống thuận lợi gặp nhiều may mắn các thứ 😋",
       "Chắc bấm tới đây trmy lười đọc r nên anh có 1 tiết mục hack thông báo máy trmy, chuẩn bị bấm tiếp nè",
       "ting", //1
-      ":))",//2
-      "nữa nè",//3
-      "ting ting",
-      "của ít mà lòng vòng ha, thông cảm nhó",//5
-      "ơ mà nhỡ máy e kh có thông báo thì cũng quê lắm:))",
-      "tinggg tingg",
-      "lần thứ mấy rồi ta",//8
-      "kệ đi ting ting tiếp nè"
-      "hây chaa",//10
-      "nổ máy chưa",
-      "con gì đây 🦈👟👟👟",//12
-      "🐘🌵",
-      "khó nha ☕🥷",//14
-      "Và trmy biết gì kh, từ nãy tới giờ trmy bấm dc 23 lần rồi á :)) (kh tính cái này)",
-      "Tổng cộng anh ghi chữ ting 7 lần",
-      "Còn 2008 thì để a hôn gió trả góp dần nhaa 🤣"
-         ];
+      ":))", //2
+      "nữa nè", //3
+      "ting ting", //4
+      "của ít mà lòng vòng ha, thông cảm nhó", //5
+      "ơ mà nhỡ máy e kh có thông báo thì cũng quê lắm:))", //6
+      "tinggg tingg", //7
+      "lần thứ mấy rồi ta", //8
+      "kệ đi ting ting tiếp nè", //9
+      "hây chaa", //10
+      "nổ máy chưa", //11
+      "con gì đây 🦈👟👟👟", //12
+      "🐘🌵", //13
+      "khó nha ☕🥷", //14
+      "Và trmy biết gì kh, từ nãy tới giờ trmy bấm dc 23 lần rồi á :)) (kh tính cái này)", //15
+      "Tổng cộng anh ghi chữ ting 7 lần", //16
+      "Còn 2008 thì để a hôn gió trả góp dần nhaa 🤣" //17 (đã sửa số lượng cho đúng)
+    ];
     const funFacts = [
       "hehe yêu trmy"
     ];
@@ -249,10 +249,13 @@
     const continueButton = document.getElementById("continueButton");
     const loveButton = document.getElementById("loveButton");
 
-    new Typed('#welcomeText', {
-      strings: ["Chào iem yêuuu, sẵn sàng khám phá món quà sinh nhật chưa? 🩷"],
-      typeSpeed: 50,
-      showCursor: false,
+    // Đảm bảo Typed.js chạy khi trang tải
+    document.addEventListener("DOMContentLoaded", function() {
+      new Typed('#welcomeText', {
+        strings: ["Chào iem yêuuu, sẵn sàng khám phá món quà sinh nhật chưa? 🩷"],
+        typeSpeed: 50,
+        showCursor: false,
+      });
     });
 
     function createHeart() {
@@ -292,13 +295,13 @@
         fireConfetti();
         return;
       }
-      text.textContent = thingsILove[clickCount]; // Hiển thị theo thứ tự
+      text.textContent = thingsILove[clickCount];
       funFact.textContent = funFacts[Math.floor(Math.random() * funFacts.length)];
       clickCount++;
       loveButton.disabled = true;
       setTimeout(() => {
         loveButton.disabled = false;
-      }, 2000); // Delay 3 giây
+      }, 2000);
       if (clickCount === thingsILove.length) {
         continueButton.style.display = "block";
       }
@@ -338,11 +341,11 @@
       candlesBlown = 0;
       document.getElementById("cakeScreen").classList.remove("active");
       document.getElementById("loveScreen").classList.add("active");
-      document.getElementById("loveText").textContent = "Nhấn để biết t thích gì ở m nè 🩷";
+      document.getElementById("loveText").textContent = "Nhấn để biết mấy điều vu vơ :))";
       document.getElementById("funFact").textContent = "";
       continueButton.style.display = "none";
       document.querySelectorAll(".candle").forEach(candle => candle.style.display = "block");
-      document.getElementById("cakeText").textContent = "Chúc mừng sinh nhật m! Thổi nến nào 🎉";
+      document.getElementById("cakeText").textContent = "Chúc mừng sinh nhật trmyy! Thổi nến nào 🎉";
     }
 
     function toggleMusic() {
@@ -361,4 +364,4 @@
     }
   </script>
 </body>
-  </html>
+</html>
