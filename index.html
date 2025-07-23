@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chúc mừng sinh nhật Trà My 🩷</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <style>
+    body {
+      font-family: 'Dancing Script', cursive;
+      background: linear-gradient(135deg, #1a1a2e, #162447);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      flex-direction: column;
+      overflow-x: hidden;
+      padding: 20px;
+      box-sizing: border-box;
+      position: relative;
+    }
+    .sparkle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: #f7e68a;
+      border-radius: 50%;
+      opacity: 0.7;
+      animation: sparkle 3s infinite;
+    }
+    @keyframes sparkle {
+      0% { transform: scale(1); opacity: 0.7; }
+      50% { transform: scale(1.5); opacity: 0.3; }
+      100% { transform: scale(1); opacity: 0.7; }
+    }
+    .card {
+      background-color: rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      padding: 30px;
+      text-align: center;
+      max-width: 500px;
+      width: 100%;
+      margin: 20px 0;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: none;
+      animation: fadeIn 1s ease-in-out;
+    }
+    .card.active {
+      display: block;
+    }
+    .welcome-text, .love-text, .cake-text {
+      font-size: 2.2rem;
+      color: #f7e68a;
+      margin-bottom: 25px;
+      min-height: 100px;
+      position: relative;
+    }
+    .love-text {
+      min-height: 120px;
+    }
+    .fun-fact {
+      font-size: 1.2rem;
+      color: #ff8aa6;
+      margin: 10px 0;
+      opacity: 0;
+      animation: textFade 0.5s forwards;
+    }
+    .letter {
+      font-size: 1.4rem;
+      color: #fff;
+      line-height: 1.6;
+    }
+    .cake-img {
+      max-width: 80%;
+      height: auto;
+      border-radius: 10px;
+      margin: 20px 0;
+      position: relative;
+      transition: transform 0.2s;
+    }
+    .cake-img.shake {
+      transform: rotate(2deg);
+      animation: shake 0.3s;
+    }
+    .candle {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      top: -40px;
+      cursor: pointer;
+      background: url('https://i.imgur.com/7kQ3n5z.gif') no-repeat center;
+      background-size: contain;
+    }
+    .button-container {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    button {
+      padding: 12px 25px;
+      font-size: 1.2rem;
+      background: linear-gradient(45deg, #ff8aa6, #ff5b7a);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s, opacity 0.5s;
+    }
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+    button:disabled {
+      background: #888;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+    #continueButton {
+      display: none;
+      opacity: 0;
+      animation: textFade 0.5s forwards;
+    }
+    .heart {
+      position: absolute;
+      color: #ff4d6d;
+      font-size: 1.2rem;
+      animation: heartFloat 2.5s ease-out forwards;
+      pointer-events: none;
+    }
+    @keyframes heartFloat {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(-150px) rotate(20deg); opacity: 0; }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes textFade {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes shake {
+      0% { transform: rotate(0deg); }
+      25% { transform: rotate(2deg); }
+      50% { transform: rotate(-2deg); }
+      75% { transform: rotate(2deg); }
+      100% { transform: rotate(0deg); }
+    }
+    @media (max-width: 600px) {
+      .card { padding: 20px; max-width: 90%; }
+      .welcome-text, .love-text, .cake-text { font-size: 1.8rem; min-height: 80px; }
+      .letter { font-size: 1.2rem; }
+      button { font-size: 1rem; padding: 10px 20px; }
+      .cake-img { max-width: 90%; }
+      .candle { width: 25px; height: 25px; top: -30px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="sparkle" style="top: 10%; left: 20%;"></div>
+  <div class="sparkle" style="top: 30%; left: 70%;"></div>
+  <div class="sparkle" style="top: 60%; left: 40%;"></div>
+  <div class="sparkle" style="top: 80%; left: 90%;"></div>
+
+  <div class="card active" id="welcomeScreen">
+    <div class="welcome-text" id="welcomeText"></div>
+    <div class="button-container">
+      <button onclick="goToLove()">Bắt đầu nào 😚</button>
+    </div>
+  </div>
+  <div class="card" id="loveScreen">
+    <div class="love-text" id="loveText">Nhấn để biết t thích gì ở m nè 🩷</div>
+    <div class="fun-fact" id="funFact"></div>
+    <div class="button-container">
+      <button id="loveButton" onclick="showLove()">Cho t biết đi 😚</button>
+      <button id="continueButton" onclick="goToLetter()">Tiếp tục nè 💌</button>
+    </div>
+  </div>
+  <div class="card" id="letterScreen">
+    <h2>Thư gửi m 🩷</h2>
+    <p class="letter">
+      M, sinh nhật m năm nay t chỉ muốn nói là t cảm ơn m vì đã xuất hiện trong đời t. Chúc m một ngày thật hạnh phúc, t sẽ luôn ở đây vì m nè! 🎉 Thay thông điệp của bạn tại đây
+    </p>
+    <div class="button-container">
+      <button onclick="goToCake()">Đến bất ngờ cuối nha 🎂</button>
+    </div>
+  </div>
+  <div class="card" id="cakeScreen">
+    <div class="cake-text" id="cakeText">Chúc mừng sinh nhật m! Thổi nến nào 🎉</div>
+    <div style="position: relative;">
+      <img class="cake-img" src="https://i.imgur.com/8bX7z5r.png" alt="Bánh sinh nhật">
+      <div class="candle" id="candle1" style="left: 35%;" onclick="blowCandle(this)"></div>
+      <div class="candle" id="candle2" style="left: 50%;" onclick="blowCandle(this)"></div>
+      <div class="candle" id="candle3" style="left: 65%;" onclick="blowCandle(this)"></div>
+    </div>
+    <div class="button-container">
+      <button onclick="resetGame()">Xem lại từ đầu 💕</button>
+    </div>
+    <audio id="cheerSound" src="https://cdn.pixabay.com/audio/2023/03/29/audio_6b3f6f35f3.mp3"></audio>
+  </div>
+  <audio id="bgMusic" loop>
+    <source src="https://cdn.pixabay.com/audio/2022/05/27/audio_d98c0a4d68.mp3" type="audio/mp3">
+    <!-- Bài "Sweet" từ Pixabay, nhẹ nhàng, lãng mạn -->
+  </audio>
+  <button onclick="toggleMusic()" style="position: fixed; top: 20px; right: 20px;">Bật Nhạc 🎶</button>
+
+  <script>
+    const thingsILove = [
+      "Nụ cười ngu ngu của m mà t mê tít 😚",
+      "Cách m gọi t mỗi lần giận dỗi, nghe mà t muốn xỉu 😆",
+      "Khi m tự nhiên nhắn tin hỏi 't ăn chưa', nghe tưởng đơn giản mà ấm vãi 🥺",
+      "T thích cái kiểu m kể chuyện linh tinh, dù chuyện chả đâu vào đâu 😝",
+      "Khi m im lặng nhưng vẫn chịu nghe t xàm xí, yêu cực luôn á 🩵",
+      "Cách m hay nhõng nhẽo kiểu 'em hư lắm', nghe mà t chịu thua luôn 😩",
+      "Ánh mắt m lúc cười – t nghiện thật sự 😳",
+      "Chỉ cần có m, tự nhiên mọi thứ bớt chán liền 💫",
+      "T thích cả cái lúc m chê t, nhưng mặt vẫn thương thương 😌",
+      "Kể cả lúc m không nói gì, chỉ cần m ở đó là đủ 😌",
+      "Cái cách m lén nhìn t, tưởng t không biết đâu nha 😏",
+      "Mỗi lần m nắm tay t, t cảm giác như cả thế giới là của mình 🥰",
+      "T thích cái mùi hương của m, dù chỉ thoảng qua thôi cũng đủ làm t nhớ 💕",
+      "Cách m nhăn mặt khi ăn món không thích, dễ thương xỉu 😅",
+      "Mỗi lần m hát vu vơ, t chỉ muốn dừng thời gian lại 🎶",
+      "T mê cách m luôn tìm lý do để kéo t đi ăn cùng 🍔",
+      "Cái hôm m mặc áo t tặng, t ngắm m hoài luôn á 😍",
+      "T thích nghe m kể về ước mơ, dù lớn hay nhỏ t cũng muốn cùng m thực hiện 🌟",
+      "Khi m ngủ quên lúc xem phim, t chỉ muốn ôm m mãi 🥺",
+      "Cách m hay trêu t, dù biết t dễ đỏ mặt 😳",
+      "T yêu cả những lúc m giận, vì m vẫn cute không chịu được 😘",
+      "Mỗi tin nhắn m gửi, t đọc đi đọc lại cả chục lần 🩷",
+      "Chỉ cần m cười, t biết t làm gì cũng đáng luôn á 🎉"
+    ];
+    const funFacts = [
+      "M nhớ lần đầu t kéo m đi ăn khuya không? 😝",
+      "Lần m hát karaoke, t chỉ muốn nghe mãi thôi 🎤",
+      "Cái hôm m mặc áo t thích, t ngắm m cả ngày luôn á 😳",
+      "M biết không, t giữ hết tin nhắn m gửi t nè 🥰",
+      "Lần m làm rơi kem, t vừa buồn cười vừa thương 😅",
+      "Cái hôm m ngủ quên trên vai t, t không dám nhúc nhích luôn 🥺",
+      "M nhớ lần t cố nấu ăn cho m không, cháy cả bếp mà m vẫn khen 😝",
+      "T giữ cái vé xem phim lần đầu mình đi cùng nhau nè 🎬"
+    ];
+    let clickCount = 0;
+    let candlesBlown = 0;
+    const music = document.getElementById("bgMusic");
+    const cheerSound = document.getElementById("cheerSound");
+    const continueButton = document.getElementById("continueButton");
+    const loveButton = document.getElementById("loveButton");
+
+    new Typed('#welcomeText', {
+      strings: ["Chào m yêu, sẵn sàng khám phá món quà sinh nhật t làm cho m chưa? 🩷"],
+      typeSpeed: 50,
+      showCursor: false,
+    });
+
+    function createHeart() {
+      for (let i = 0; i < 3; i++) {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerHTML = "❤️";
+        heart.style.left = `${Math.random() * 100}vw`;
+        heart.style.top = `${Math.random() * 50 + 50}vh`;
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 2500);
+      }
+    }
+
+    function fireConfetti() {
+      confetti({
+        particleCount: 150,
+        spread: 80,
+        origin: { y: 0.6 },
+        colors: ['#ff6b8a', '#ff4d6d', '#f7e68a']
+      });
+    }
+
+    function showLove() {
+      const text = document.getElementById("loveText");
+      const funFact = document.getElementById("funFact");
+      text.style.animation = "none";
+      funFact.style.animation = "none";
+      setTimeout(() => {
+        text.style.animation = "textFade 0.5s forwards";
+        funFact.style.animation = "textFade 0.5s forwards";
+      }, 10);
+      if (clickCount >= thingsILove.length) {
+        text.textContent = "Hết rồi, nhưng t vẫn còn cả tá lý do để yêu m 🩷";
+        funFact.textContent = "";
+        continueButton.style.display = "block";
+        fireConfetti();
+        return;
+      }
+      text.textContent = thingsILove[clickCount]; // Hiển thị theo thứ tự
+      funFact.textContent = funFacts[Math.floor(Math.random() * funFacts.length)];
+      clickCount++;
+      loveButton.disabled = true;
+      setTimeout(() => {
+        loveButton.disabled = false;
+      }, 3000); // Delay 3 giây
+      if (clickCount === thingsILove.length) {
+        continueButton.style.display = "block";
+      }
+      createHeart();
+      fireConfetti();
+    }
+
+    function goToLove() {
+      document.getElementById("welcomeScreen").classList.remove("active");
+      document.getElementById("loveScreen").classList.add("active");
+    }
+
+    function goToLetter() {
+      document.getElementById("loveScreen").classList.remove("active");
+      document.getElementById("letterScreen").classList.add("active");
+    }
+
+    function goToCake() {
+      document.getElementById("letterScreen").classList.remove("active");
+      document.getElementById("cakeScreen").classList.add("active");
+    }
+
+    function blowCandle(candle) {
+      candle.style.display = "none";
+      document.querySelector(".cake-img").classList.add("shake");
+      setTimeout(() => document.querySelector(".cake-img").classList.remove("shake"), 300);
+      candlesBlown++;
+      if (candlesBlown === 3) {
+        fireConfetti();
+        cheerSound.play().catch(err => console.error("Lỗi phát âm thanh:", err));
+        document.getElementById("cakeText").textContent = "Chúc m sinh nhật vui vẻ, yêu m nhiều lắm! 🩷";
+      }
+    }
+
+    function resetGame() {
+      clickCount = 0;
+      candlesBlown = 0;
+      document.getElementById("cakeScreen").classList.remove("active");
+      document.getElementById("loveScreen").classList.add("active");
+      document.getElementById("loveText").textContent = "Nhấn để biết t thích gì ở m nè 🩷";
+      document.getElementById("funFact").textContent = "";
+      continueButton.style.display = "none";
+      document.querySelectorAll(".candle").forEach(candle => candle.style.display = "block");
+      document.getElementById("cakeText").textContent = "Chúc mừng sinh nhật m! Thổi nến nào 🎉";
+    }
+
+    function toggleMusic() {
+      const button = event.target;
+      if (music.paused) {
+        music.play().then(() => {
+          button.textContent = "Tắt Nhạc 🎶";
+        }).catch(err => {
+          console.error("Lỗi phát nhạc:", err);
+          alert("Không thể phát nhạc. Vui lòng kiểm tra trình duyệt hoặc link nhạc!");
+        });
+      } else {
+        music.pause();
+        button.textContent = "Bật Nhạc 🎶";
+      }
+    }
+  </script>
+</body>
+  </html>
